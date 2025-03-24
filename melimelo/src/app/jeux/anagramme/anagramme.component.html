@@ -1,1 +1,60 @@
-<p>anagramme works!</p>
+<div class="anagramme-container">
+    <h2>Jeu d'Anagrammes</h2>
+  
+    <div class="score">
+      Score : <strong>{{ score }}</strong>
+    </div>
+  
+    <div class="themes">
+      <h3>Thèmes :</h3>
+      <div class="theme-list">
+        <button
+          *ngFor="let theme of themes"
+          (click)="choisirTheme(theme)"
+          [class.selected]="theme === themeActuel"
+        >
+          {{ theme | titlecase }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="lettres-melangees">
+      <h4>Lettres mélangées :</h4>
+      <div class="lettres">
+        <button
+          *ngFor="let lettre of motMelangeVisible; let i = index"
+          (click)="selectionnerLettre(lettre, i)"
+        >
+          {{ lettre }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="lettres-selectionnees">
+      <h4>Mot en cours :</h4>
+      <div class="lettres">
+        <button
+          *ngFor="let lettre of motEnCours; let i = index"
+          (click)="deselectionnerLettre(i)"
+        >
+          {{ lettre }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="actions">
+      <button (click)="validerMot()">Valider</button>
+      <button (click)="genererMot()">Nouveau mot</button>
+      <button (click)="afficherSolution()">Solution</button>
+
+    </div>
+  
+    <div class="message" *ngIf="message">
+        <div class="solution" *ngIf="solutionVisible">
+            🔍 Le mot était : <strong>{{ motOriginal }}</strong>
+          </div>
+          
+      {{ message }}
+    </div>
+  </div>
+  

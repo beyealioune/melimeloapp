@@ -1,1 +1,62 @@
-<p>melimelo works!</p>
+<div class="melimelo-container">
+    <h2>Méli Mélo</h2>
+    <div class="themes">
+        <h3>Choisissez un thème :</h3>
+        <div class="theme-list">
+          <button
+            *ngFor="let t of themes"
+            (click)="choisirTheme(t)"
+            [class.selected-theme]="t === themeActuel"
+          >
+            {{ t | titlecase }}
+          </button>
+        </div>
+      </div>
+      
+    <div class="grid">
+      <div
+        *ngFor="let row of grid; let i = index"
+        class="row"
+      >
+        <div
+          *ngFor="let cell of row; let j = index"
+          class="cell"
+          [class.selected]="isSelected(i, j)"
+          [class.solution]="solutionVisible && estDansSolution(i, j)"
+                    (click)="onCellClick(i, j)"
+        >
+          {{ cell }}
+        </div>
+      </div>
+    </div>
+    <div class="mots-a-trouver">
+        <h3>Mots à trouver :</h3>
+        <ul>
+          <li
+            *ngFor="let mot of motsADeviner"
+            [class.trouve]="found.includes(mot)"
+          >
+            {{ mot }}
+          </li>
+        </ul>
+      </div>
+      
+    <div class="controls">
+      <button (click)="validerMot()">Valider le mot</button>
+      <button (click)="nouvelleGrille()">Nouvelle grille</button>
+      <button (click)="afficherSolution()">Afficher la solution</button>
+
+    </div>
+  
+    <div class="resultats">
+      <h3>Mots trouvés :</h3>
+      <ul>
+        <li *ngFor="let mot of found">{{ mot }}</li>
+      </ul>
+  
+      <div *ngIf="tousLesMotsTrouves" class="bravo">
+        🎉 Tous les mots ont été trouvés !
+      </div>
+    </div>
+  </div>
+  
