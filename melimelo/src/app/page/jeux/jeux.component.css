@@ -1,0 +1,24 @@
+.jeux-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    gap: 20px;
+  
+    .game-card {
+      border: 2px solid #3f51b5;
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 24px;
+      text-decoration: none;
+      color: #3f51b5;
+      background-color: #e8eaf6;
+      transition: 0.3s;
+  
+      &:hover {
+        background-color: #c5cae9;
+      }
+    }
+  }
+  

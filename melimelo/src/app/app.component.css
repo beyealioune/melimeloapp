@@ -1,0 +1,42 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .burger-menu {
+    display: none;
+  }
+  
+  a.active-link, button.active-link {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .main-content {
+    padding: 24px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  
+    .burger-menu {
+      display: inline-flex;
+    }
+  }
+  

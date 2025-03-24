@@ -1,0 +1,24 @@
+<mat-toolbar color="primary" class="navbar">
+  <span class="logo">Melimelo</span>
+
+  <!-- Menu pour desktop -->
+  <nav class="nav-links">
+    <a mat-button routerLink="/" >Accueil</a>
+    <a mat-button routerLink="/jeux" >Jeux</a>
+    <a mat-button routerLink="/contact" >Contact</a>
+  </nav>
+
+  <!-- Menu burger pour mobile -->
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="burger-menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/" >Accueil</button>
+    <button mat-menu-item routerLink="/jeux" >Jeux</button>
+    <button mat-menu-item routerLink="/contact">Contact</button>
+  </mat-menu>
+</mat-toolbar>
+<h1 routerLink="/jeux">JEUX</h1>
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
