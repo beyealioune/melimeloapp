@@ -12,21 +12,27 @@
           </button>
         </div>
       </div>
+      <div class="niveau-et-points">
+        <p>Niveau : {{ niveau() | titlecase }}</p>
+        <p>Points : {{ points() }}</p>
+      </div>
       
     <div class="grid">
       <div
         *ngFor="let row of grid; let i = index"
         class="row"
       >
-        <div
-          *ngFor="let cell of row; let j = index"
-          class="cell"
-          [class.selected]="isSelected(i, j)"
-          [class.solution]="solutionVisible && estDansSolution(i, j)"
-                    (click)="onCellClick(i, j)"
-        >
-          {{ cell }}
-        </div>
+      <div
+      *ngFor="let cell of row; let j = index"
+      class="cell"
+      [class.selected]="isSelected(i, j)"
+      [class.solution]="solutionVisible && estDansSolution(i, j)"
+      [class.trouve]="estDansMotTrouve(i, j)"
+      (click)="onCellClick(i, j)"
+    >
+      {{ cell }}
+    </div>
+    
       </div>
     </div>
     <div class="mots-a-trouver">

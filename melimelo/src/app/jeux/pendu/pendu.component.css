@@ -50,3 +50,16 @@
       
   }
   
+
+  button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .warning {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+

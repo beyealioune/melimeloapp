@@ -1,53 +1,71 @@
 <div class="pendu-container">
-    <h2>Jeu du Pendu</h2>
-  
-    <div class="mot">
-      <span>{{ afficherMot() }}</span>
-    </div>
-    <svg width="200" height="250" class="pendu-drawing">
-        <!-- Potence -->
-        <line x1="10" y1="240" x2="150" y2="240" stroke="black" stroke-width="4"/>
-        <line x1="40" y1="20" x2="40" y2="240" stroke="black" stroke-width="4"/>
-        <line x1="40" y1="20" x2="120" y2="20" stroke="black" stroke-width="4"/>
-        <line x1="120" y1="20" x2="120" y2="50" stroke="black" stroke-width="4"/>
-      
-        <!-- Tête -->
-        <circle *ngIf="lettresRatees().length > 0" cx="120" cy="70" r="20" stroke="black" stroke-width="3" fill="none"/>
-      
-        <!-- Corps -->
-        <line *ngIf="lettresRatees().length > 1" x1="120" y1="90" x2="120" y2="150" stroke="black" stroke-width="3"/>
-      
-        <!-- Bras gauche -->
-        <line *ngIf="lettresRatees().length > 2" x1="120" y1="100" x2="100" y2="130" stroke="black" stroke-width="3"/>
-      
-        <!-- Bras droit -->
-        <line *ngIf="lettresRatees().length > 3" x1="120" y1="100" x2="140" y2="130" stroke="black" stroke-width="3"/>
-      
-        <!-- Jambe gauche -->
-        <line *ngIf="lettresRatees().length > 4" x1="120" y1="150" x2="100" y2="190" stroke="black" stroke-width="3"/>
-      
-        <!-- Jambe droite -->
-        <line *ngIf="lettresRatees().length > 5" x1="120" y1="150" x2="140" y2="190" stroke="black" stroke-width="3"/>
-      </svg>
-      
-    <div *ngIf="!estGagne() && !estPerdu()" class="form">
-      <input [(ngModel)]="lettreInput" maxlength="1" placeholder="Lettre..." />
-      <button (click)="devinerLettre()">Essayer</button>
-    </div>
-  
-    <div class="infos">
-      <p>Lettres ratées : {{ lettresRatees().join(', ') }}</p>
-      <p>Erreurs : {{ lettresRatees().length }} / {{ maxErreurs }}</p>
-    </div>
-  
-    <div *ngIf="estGagne()" class="resultat win">
-      🎉 Bravo, tu as gagné !
-    </div>
-  
-    <div *ngIf="estPerdu()" class="resultat lose">
-      😢 Perdu ! Le mot était : <strong>{{ motMystere() }}</strong>
-    </div>
-  
-    <button (click)="rejouer()">Rejouer</button>
+  <h2>Jeu du Pendu</h2>
+
+  <label for="theme">Choisir un thème :</label>
+  <select [(ngModel)]="themeSelectionne" (change)="demarrerJeu()" id="theme">
+    <option *ngFor="let theme of themes" [value]="theme">{{ theme }}</option>
+  </select>
+  <div class="infos-points">
+    <p><strong>Points :</strong> {{ points() }}</p>
+    <p><strong>Niveau :</strong> {{ niveau() | titlecase }}</p>
   </div>
   
+  <div class="mot">
+    <span>{{ afficherMot() }}</span>
+  </div>
+
+  <svg width="200" height="250" class="pendu-drawing">
+    <!-- Potence -->
+    <line x1="10" y1="240" x2="150" y2="240" stroke="black" stroke-width="4"/>
+    <line x1="40" y1="20" x2="40" y2="240" stroke="black" stroke-width="4"/>
+    <line x1="40" y1="20" x2="120" y2="20" stroke="black" stroke-width="4"/>
+    <line x1="120" y1="20" x2="120" y2="50" stroke="black" stroke-width="4"/>
+  
+    <!-- Tête -->
+    <circle *ngIf="lettresRatees().length > 0" cx="120" cy="70" r="20" stroke="black" stroke-width="3" fill="none"/>
+  
+    <!-- Corps -->
+    <line *ngIf="lettresRatees().length > 1" x1="120" y1="90" x2="120" y2="150" stroke="black" stroke-width="3"/>
+  
+    <!-- Bras gauche -->
+    <line *ngIf="lettresRatees().length > 2" x1="120" y1="100" x2="100" y2="130" stroke="black" stroke-width="3"/>
+  
+    <!-- Bras droit -->
+    <line *ngIf="lettresRatees().length > 3" x1="120" y1="100" x2="140" y2="130" stroke="black" stroke-width="3"/>
+  
+    <!-- Jambe gauche -->
+    <line *ngIf="lettresRatees().length > 4" x1="120" y1="150" x2="100" y2="190" stroke="black" stroke-width="3"/>
+  
+    <!-- Jambe droite -->
+    <line *ngIf="lettresRatees().length > 5" x1="120" y1="150" x2="140" y2="190" stroke="black" stroke-width="3"/>
+  </svg>
+  <div *ngIf="!estGagne() && !estPerdu()" class="form">
+    <input [(ngModel)]="lettreInput" maxlength="1" placeholder="Lettre..." />
+    <button (click)="devinerLettre()">Essayer</button>
+    <button (click)="afficherLaSolution()">Afficher la solution</button>
+  <button [disabled]="points() < lettreCoute" (click)="decouvrirLettre()">Découvrir une lettre</button>
+  <p *ngIf="points() < lettreCoute" class="warning">
+    ❗ Vous devez avoir au moins {{ lettreCoute }} points pour découvrir une lettre.
+  </p>
+  
+  </div>
+
+  <div class="infos">
+    <p>Lettres ratées : {{ lettresRatees().join(', ') }}</p>
+    <p>Erreurs : {{ lettresRatees().length }} / {{ maxErreurs }}</p>
+  </div>
+
+  <div *ngIf="afficherSolution() && !estGagne()" class="solution">
+    💡 Mot solution : <strong>{{ motMystere() }}</strong>
+  </div>
+
+  <div *ngIf="estGagne()" class="resultat win">
+    🎉 Bravo, tu as gagné !
+  </div>
+
+  <div *ngIf="estPerdu()" class="resultat lose">
+    😢 Perdu ! Le mot était : <strong>{{ motMystere() }}</strong>
+  </div>
+
+  <button (click)="rejouer()">Rejouer</button>
+</div>

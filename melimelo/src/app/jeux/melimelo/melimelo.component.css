@@ -139,4 +139,12 @@
       }
     }
   }
+  .cell.trouve {
+    background-color: #a3f7bf;
+    color: red;
+    font-weight: bold;
+    border: 2px solid #2ecc71;
+    transition: background-color 0.3s;
+  }
+  
   
